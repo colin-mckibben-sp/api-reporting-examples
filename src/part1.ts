@@ -3,13 +3,6 @@ import { AccountsApi, Configuration, axiosRetry, Paginator, } from "sailpoint-ap
 export const getAccounts = async () => {
 
     let apiConfig = new Configuration()
-    apiConfig.retriesConfig = {
-        retries: 4,
-        retryDelay: axiosRetry.exponentialDelay,
-        onRetry(retryCount, error, requestConfig) {
-            console.log(`retrying due to request error, try number ${retryCount}`)
-        },
-    }
     let api = new AccountsApi(apiConfig)
 
     const val = await api.listAccounts()
@@ -21,13 +14,6 @@ export const getAccounts = async () => {
 export const getAccountsWithFilters = async () => {
 
     let apiConfig = new Configuration()
-    apiConfig.retriesConfig = {
-        retries: 4,
-        retryDelay: axiosRetry.exponentialDelay,
-        onRetry(retryCount, error, requestConfig) {
-            console.log(`retrying due to request error, try number ${retryCount}`)
-        },
-    }
     let api = new AccountsApi(apiConfig)
 
     let parameters = {
@@ -43,22 +29,38 @@ export const getAccountsWithFilters = async () => {
 export const getPaginatedAccounts = async () => {
 
     let apiConfig = new Configuration()
-    apiConfig.retriesConfig = {
-        retries: 4,
-        retryDelay: axiosRetry.exponentialDelay,
-        onRetry(retryCount, error, requestConfig) {
-            console.log(`retrying due to request error, try number ${retryCount}`)
-        },
-    }
     let api = new AccountsApi(apiConfig)
 
     let parameters = {
-        limit: 100,
         filters: 'sourceId eq "2c9180887671ff8c01767b4671fb7d5e" and uncorrelated eq false'
     }
 
     const val = await Paginator.paginate(api, api.listAccounts, parameters, 10)
 
     return val.data
+
+}
+
+export const getPaginatedAccountsWithSelectedFields = async () => {
+
+    let apiConfig = new Configuration()
+    let api = new AccountsApi(apiConfig)
+
+    let parameters = {
+        filters: 'sourceId eq "2c9180887671ff8c01767b4671fb7d5e" and uncorrelated eq false'
+    }
+
+    const val = await Paginator.paginate(api, api.listAccounts, parameters, 10)
+
+
+    let accounts = val.data.map(account => {
+        return {
+            name: account.name,
+            email: account.attributes!["e-mail"],
+            manager: account.attributes!["manager"]
+        }
+    })
+
+    return accounts
 
 }
