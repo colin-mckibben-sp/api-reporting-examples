@@ -1,6 +1,7 @@
 build
 output.json
 output.csv
+.vscode
 
 # Logs
 logs

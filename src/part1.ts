@@ -1,4 +1,15 @@
-import { AccountsApi, Configuration, axiosRetry, Paginator, } from "sailpoint-api-client"
+/* 
+Let’s start with a basic use case of exporting uncorrelated accounts in a source to a CSV file.
+
+1. Start with a basic setup of a TypeScript application that has the SDK preinstalled and configured with auth
+2. Invoke the accounts API with a simple query.  Demonstrate how to run the program and output to stdout and a file.
+3. Filter by source and uncorrelated, and sort by name in ASC order
+4. Use pagination to get all records in the query
+5. Use typescript class to select which fields to output
+6. Convert to CSV
+*/
+
+import { AccountsApi, Configuration, Paginator, } from "sailpoint-api-client"
 
 export const getAccounts = async () => {
 

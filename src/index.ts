@@ -1,7 +1,9 @@
 import { Configuration, Paginator, SearchApi, Search, IdentityDocument } from "sailpoint-api-client"
 import * as part1 from './part1'
+import * as part2 from './part2'
+import * as part3 from './part3'
 import fs from 'fs'
-import { json2csv, json2csvAsync } from 'json-2-csv';
+import { json2csvAsync } from 'json-2-csv';
 
 const search = async () => {
     let apiConfig = new Configuration()
@@ -49,9 +51,9 @@ const writeCSV = async (data: any) => {
 }
 
 const main = async () => {
-    const data = await part1.getPaginatedAccountsWithSelectedFields()
+    const data = await part3.completedApprovalsWithEmailEfficient()
 
-    await writeCSV(data)
+    await writeJSON(data)
 }
 
 main()
