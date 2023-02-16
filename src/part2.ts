@@ -9,6 +9,7 @@ Not all of our APIs provide adequate filtering options that will fit your needs.
 
 import { AccessRequestApprovalsApi, Configuration, Paginator, } from "sailpoint-api-client"
 
+// Get completed approvals with a filter, selecting a subset of the data.
 export const completedApprovals = async () => {
 
     let apiConfig = new Configuration()

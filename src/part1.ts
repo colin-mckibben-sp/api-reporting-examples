@@ -11,6 +11,7 @@ Let’s start with a basic use case of exporting uncorrelated accounts in a sour
 
 import { AccountsApi, Configuration, Paginator, } from "sailpoint-api-client"
 
+// List all accounts
 export const getAccounts = async () => {
 
     let apiConfig = new Configuration()
@@ -22,6 +23,7 @@ export const getAccounts = async () => {
 
 }
 
+// Use a query filter to reduce the number of accounts returned
 export const getAccountsWithFilters = async () => {
 
     let apiConfig = new Configuration()
@@ -37,6 +39,7 @@ export const getAccountsWithFilters = async () => {
 
 }
 
+// Use pagination to get more than 250 accounts
 export const getPaginatedAccounts = async () => {
 
     let apiConfig = new Configuration()
@@ -52,6 +55,7 @@ export const getPaginatedAccounts = async () => {
 
 }
 
+// Only include specific attributes in the final result
 export const getPaginatedAccountsWithSelectedFields = async () => {
 
     let apiConfig = new Configuration()

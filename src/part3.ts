@@ -14,6 +14,7 @@ Expanding data in this way can be very expensive, and will likely lead to rate l
 import { AccessRequestApprovalsApi, ApprovalScheme, AxiosResponse, axiosRetry, Configuration, Paginator, PublicIdentitiesApi, PublicIdentity, } from "sailpoint-api-client"
 import * as part2 from './part2'
 
+// Get completed approvals with the email address instead of identity id.  This one is inefficient.
 export const completedApprovalsWithEmail = async () => {
 
     // Add retry logic since we will asynchronously execute API calls to get identity email addresses.
@@ -47,6 +48,7 @@ export const completedApprovalsWithEmail = async () => {
 
 }
 
+// Deduplicate reviewers to save on total number of network requests.
 export const completedApprovalsWithEmailEfficient = async () => {
 
     // Add retry logic since we will asynchronously execute API calls to get identity email addresses.
@@ -63,11 +65,13 @@ export const completedApprovalsWithEmailEfficient = async () => {
 
     const approvals = await part2.completedApprovals()
 
+    // Build a map of unique reviewedBy identities
     const identities = new Map<string, string>()
     approvals.forEach(approval => {
         identities.set(approval.reviewedBy!, "")
     })
 
+    // Resolve the email address for each unique identity
     const identityEmailRequests: Promise<AxiosResponse<PublicIdentity[], any>>[] = []
     identities.forEach((email, identity) => {
         let parameters = {
@@ -81,6 +85,7 @@ export const completedApprovalsWithEmailEfficient = async () => {
         identities.set(result.data[0].id!, result.data[0].email!)
     })
 
+    // replace the reviewedBy identity ID with the email address
     return approvals.map(approval => {
         approval.reviewedBy = identities.get(approval.reviewedBy!)
         return approval
