@@ -1,6 +1,7 @@
 import * as part1 from './part1'
 import * as part2 from './part2'
 import * as part3 from './part3'
+import * as part4 from './part4'
 import fs from 'fs'
 import { json2csvAsync } from 'json-2-csv';
 
@@ -29,7 +30,7 @@ const writeCSV = async (data: any) => {
 }
 
 const main = async () => {
-    const data = await part3.completedApprovalsWithEmailEfficient()
+    const data = await part1.getSearch()
 
     await writeJSON(data)
 }

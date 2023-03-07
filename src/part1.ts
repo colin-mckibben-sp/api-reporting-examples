@@ -9,7 +9,7 @@ Let’s start with a basic use case of exporting uncorrelated accounts in a sour
 6. Convert to CSV
 */
 
-import { AccountsApi, Configuration, Paginator, } from "sailpoint-api-client"
+import { AccountsApi, Configuration, Paginator, SearchApi, SearchApiSearchPostRequest, } from "sailpoint-api-client"
 
 // List all accounts
 export const getAccounts = async () => {
